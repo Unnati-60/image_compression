@@ -47,7 +47,7 @@ def upload_image():
 
             return render_template('index.html',
                                    original_image=filename,
-                                   compressed_image=compressed_filename)
+                                   compressed_image=compressed_filename,clusters = CLUSTERS)
 
     return render_template('index.html',clusters = CLUSTERS)
 
