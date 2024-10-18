@@ -46,7 +46,7 @@ def compress_image(img_file,k):
         plt.xticks(num,fontsize=20)
         plt.yticks([])
         plt.imshow(palette)
-        plt.savefig('static\compressed_images\colors.png', bbox_inches='tight', pad_inches=0, dpi=300)
+        plt.savefig(os.path.join('static', 'compressed_images', 'colors.png'), bbox_inches='tight', pad_inches=0, dpi=300)
         plt.close()
 
     show_centroid_colors(kmeans.cluster_centers_)
