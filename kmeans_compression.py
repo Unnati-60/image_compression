@@ -38,17 +38,23 @@ def compress_image(img_file,k):
         Args: 
         centroids (ndarray): (K, n) centroids
         '''
-        if original_img.shape[-1] == 3:
-            centroids = centroids/255
-        
-        palette = np.expand_dims(centroids, axis=0)
-        num = np.arange(0,len(centroids))
-        plt.figure(figsize=(24, 6))
-        plt.xticks(num,fontsize=20)
-        plt.yticks([])
-        plt.imshow(palette)
-        plt.savefig(os.path.join('static', 'compressed_images', 'colors.png'), bbox_inches='tight', pad_inches=0, dpi=300)
-        plt.close()
+        # Check if the centroids have 4 channels (RGBA)
+        if centroids.shape[1] == 4:  # If centroids have an alpha channel
+            centroids = centroids * 255
+            palette_image = np.zeros((6, 24 * len(centroids), 4), dtype=np.uint8)  # Create an RGBA image
+        else:
+            palette_image = np.zeros((6, 24 * len(centroids), 3), dtype=np.uint8)  # Create an RGB image
+
+        # Fill the image with colors
+        for i, color in enumerate(centroids):
+            start_x = i * 24  # Width of each color block
+            palette_image[:, start_x:start_x + 24] = color.astype(np.uint8)  # Assign color to the block
+
+        # Convert the numpy array to an image
+        color_palette_img = Image.fromarray(palette_image)
+
+        # Save the image as a PNG (supports transparency)
+        color_palette_img.save(os.path.join('static', 'compressed_images', 'colors.png'), format='PNG', dpi=(300, 300))
 
     show_centroid_colors(kmeans.cluster_centers_)
 
