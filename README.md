@@ -12,3 +12,4 @@
 - **static**: This folder stores compressed images.
 - **templates**:  Folder containing HTML templates for rendering the web pages.
 - **requirements.txt**: All ```pip```-installable libraries used for this project are listed here.
+![Demo](demo.gif)
